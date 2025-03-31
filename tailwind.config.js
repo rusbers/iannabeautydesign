@@ -1,4 +1,7 @@
 /** @type {import('tailwindcss').Config} */
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+import plugin from "tailwindcss/plugin"
+
 module.exports = {
   darkMode: ["class"],
   content: [
@@ -15,6 +18,7 @@ module.exports = {
       },
       fontFamily: {
         playfair: ["var(--font-playfair-display)"],
+        "playfair-italic": ["var(--font-playfair-display-italic)"],
         montserrat: ["var(--font-montserrat)"],
       },
       colors: {
@@ -63,6 +67,23 @@ module.exports = {
       },
     },
   },
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
-  plugins: [require("tailwindcss-animate")],
+  corePlugins: { container: false },
+  plugins: [
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    require("tailwindcss-animate"),
+    plugin(({ addComponents, theme }) => {
+      addComponents({
+        ".container": {
+          marginInline: "auto",
+          paddingInline: theme("spacing.5"),
+          maxWidth: "84.375rem",
+          width: "100%",
+
+          "@screen sm": {
+            paddingInline: theme("spacing.12"),
+          },
+        },
+      })
+    }),
+  ],
 }

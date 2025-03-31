@@ -13,10 +13,11 @@ export const TextShimmerGold = ({
   return (
     <TextShimmer
       className={cn(
-        `[--base-color:hsl(var(--gold))] [--base-gradient-color:hsl(var(--gold-light))]`,
+        `inline [--base-color:hsl(var(--gold))] [--base-gradient-color:hsl(var(--gold-light))]`,
         className
       )}
       duration={duration}
+      as="span"
     >
       {children}
     </TextShimmer>

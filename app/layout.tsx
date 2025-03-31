@@ -3,9 +3,14 @@ import { Playfair_Display, Montserrat } from "next/font/google"
 import "./globals.css"
 
 const playfairDisplay = Playfair_Display({
-  variable: "--font-playfair-display",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  variable: "--font-playfair-display",
+})
+
+const playfairDisplayItalic = Playfair_Display({
+  subsets: ["latin"],
+  style: "italic",
+  variable: "--font-playfair-display-italic",
 })
 
 const montserrat = Montserrat({
@@ -26,7 +31,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`h-full ${playfairDisplay.variable} ${montserrat.variable}`}>
+      <body
+        className={`h-full ${playfairDisplay.variable} ${playfairDisplayItalic.variable} ${montserrat.variable}`}
+      >
         {children}
       </body>
     </html>

@@ -1,32 +1,16 @@
 import { cn } from "@/lib/utils"
 
-const BASE_STYLE = "font-playfair "
+const BASE_STYLE = "font-playfair text-balance text-foreground !leading-[1.2]"
 
 export const H1 = ({ children, className }: { children: React.ReactNode; className?: string }) => {
   return (
-    <h1
-      className={cn(
-        BASE_STYLE,
-        "text-3xl sm:text-4xl md:text-5xl lg:text-6xl !leading-[1.18] tracking-wider",
-        className
-      )}
-    >
-      {children}
-    </h1>
+    <h1 className={cn(BASE_STYLE, "text-4xl md:text-5xl tracking-wide", className)}>{children}</h1>
   )
 }
 
 export const H2 = ({ children, className }: { children: React.ReactNode; className?: string }) => {
   return (
-    <h2
-      className={cn(
-        BASE_STYLE,
-        "text-2xl sm:text-3xl md:text-4xl lg:text-5xl leading-snug tracking-wider",
-        className
-      )}
-    >
-      {children}
-    </h2>
+    <h2 className={cn(BASE_STYLE, "text-3xl md:text-4xl tracking-wide", className)}>{children}</h2>
   )
 }
 
