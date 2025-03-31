@@ -115,7 +115,7 @@ const AboutSection = () => {
         {/* Left Column - Image */}
         <div className="relative size-[320px] sm:size-[400px] mx-auto">
           <div className="absolute inset-0 border-2 border-gold/50 transform -translate-x-2 -translate-y-2 rounded-full -z-10"></div>
-          <Image src="/ianna.jpg" fill className="rounded-full" alt="Ianna" />
+          <Image src="/Ianna.jpg" fill className="rounded-full" alt="Ianna" />
         </div>
 
         {/* Right Column - Content */}
