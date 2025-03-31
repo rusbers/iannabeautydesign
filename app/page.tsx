@@ -1,6 +1,8 @@
 import { ChevronRight, Star, Award, Users, Clock, Check, Crown } from "lucide-react"
-import { TextShimmer } from "@/components/motion-primitives/text-shimmer"
 import Link from "next/link"
+import { H1, H2 } from "@/components/typography/heading"
+import { Body, BodyMedium, BodySmall } from "@/components/typography/body"
+import { TextShimmerGold } from "@/components/typography/decorators"
 
 export default function Home() {
   return (
@@ -21,7 +23,7 @@ const SERVICES = [
 
 export const HeroSection = () => {
   return (
-    <section className="relative min-h-screen flex items-center">
+    <section className="relative min-h-screen flex items-center py-12">
       {/* Background Image with Overlay */}
       <div
         className="absolute inset-0 z-0"
@@ -38,40 +40,33 @@ export const HeroSection = () => {
       {/* Content Container */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Brand Badge */}
-        <div className="flex items-center gap-2 mb-8">
+        <div className="flex items-center gap-2 mb-6">
           <div className="flex items-center gap-2">
             <Crown className="size-4 text-gold" />
-            <span className="text-gold uppercase tracking-[0.2em] text-base font-medium font-playfair">
+            <BodyMedium className="text-gold text-sm sm:text-base uppercase tracking-[0.2em] font-medium text-amber-300 italic font-playfair">
               Premium Beauty Services
-            </span>
+            </BodyMedium>
           </div>
         </div>
 
         {/* Main Heading */}
-        <h1 className="text-4xl sm:text-5xl md:text-6xl font-light mb-8 balance-text font-playfair">
-          I Provide{" "}
-          <TextShimmer
-            className="[--base-color:hsl(var(--gold))] [--base-gradient-color:hsl(var(--gold-light))]"
-            duration={2}
-          >
-            Permanent
-          </TextShimmer>{" "}
-          Makeup Solutions
-        </h1>
+        <H1 className="mb-8 font-medium">
+          I Provide <TextShimmerGold>Permanent Makeup</TextShimmerGold> Solutions
+        </H1>
 
         {/* Services List */}
-        <div className="flex flex-col sm:flex-row gap-6 mb-10 text-white/80">
+        <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 mb-10 text-white/80">
           {SERVICES.map((service) => (
             <ServiceItem key={service.title} title={service.title} />
           ))}
         </div>
 
         {/* Description */}
-        <p className="text-white/80 text-lg mb-10 max-w-2xl font-light leading-relaxed">
+        <BodyMedium className="max-w-2xl mb-10">
           I’ve helped over 1,000 women transform their beauty routine with premium, long-lasting
           results. Experience the art of permanent makeup with Ianna—where precision meets
           perfection.
-        </p>
+        </BodyMedium>
 
         {/* CTAs */}
         <div className="flex flex-col sm:flex-row gap-4">
@@ -97,7 +92,7 @@ const ServiceItem = ({ title }: { title: string }) => {
   return (
     <div className="flex items-center gap-2 group">
       <Star className="size-4 text-gold" />
-      <span className="font-montserrat">{title}</span>
+      <BodySmall className="">{title}</BodySmall>
     </div>
   )
 }
