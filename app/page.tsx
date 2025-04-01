@@ -19,6 +19,7 @@ export default function Home() {
       <AboutSection />
       <PricingSection />
       <TestimonialsSection />
+      <ImagesGrid />
     </>
   )
 }
@@ -204,7 +205,7 @@ const ExternalLink = ({
   return (
     <a
       className={cn(
-        "text-secondary-foreground underline underline-offset-[6px] hover:text-gold-500 transition-all duration-300 text-sm",
+        "text-secondary-foreground underline underline-offset-[6px] hover:text-gold-500 transition-all duration-300",
         className
       )}
       href={href}
@@ -337,14 +338,15 @@ const PricingSection = () => {
             View Full Price List
           </Button>
         </div>
-
-        <Image
-          src="/services-face.png"
-          alt=""
-          width={1215 / 2}
-          height={1620 / 2}
-          className="w-full h-full object-cover sm:hidden lg:inline-block"
-        />
+        <div className="relative size-full">
+          <div className="absolute inset-0 bg-black/15 z-10"></div>
+          <Image
+            src="/prices-img.webp"
+            alt=""
+            fill
+            className="w-full h-full object-cover object-right sm:hidden lg:inline-block"
+          />
+        </div>
       </div>
     </section>
   )
@@ -432,6 +434,121 @@ const TestimonialsSection = () => {
       <ExternalLink className="text-center block" href="https://instagram.com/iannabeauty">
         See more client stories on Instagram
       </ExternalLink>
+    </section>
+  )
+}
+
+const ImagesGrid = () => {
+  return (
+    <section className="lg:max-w-[1550px] mx-auto lg:px-8">
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+        <a
+          href="https://instagram.com/iannabeauty"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="relative group overflow-hidden "
+        >
+          <div className="relative aspect-square">
+            <Image
+              src="/5.jpg"
+              alt="Gallery image"
+              fill
+              className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
+            />
+          </div>
+        </a>
+        <a
+          href="https://instagram.com/iannabeauty"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="relative group overflow-hidden"
+        >
+          <div className="relative aspect-square">
+            <Image
+              src="/2.jpg"
+              alt="Gallery image"
+              fill
+              className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
+            />
+          </div>
+        </a>
+
+        <a
+          href="https://instagram.com/iannabeauty"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="relative group overflow-hidden col-span-2 row-span-2"
+        >
+          <div className="relative aspect-square">
+            <Image
+              src="/4.jpg"
+              alt="Gallery image"
+              fill
+              className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
+            />
+          </div>
+        </a>
+        <a
+          href="https://instagram.com/iannabeauty"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="relative group overflow-hidden "
+        >
+          <div className="relative aspect-square">
+            <Image
+              src="/6.jpg"
+              alt="Gallery image"
+              fill
+              className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
+            />
+          </div>
+        </a>
+        <a
+          href="https://instagram.com/iannabeauty"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="relative group overflow-hidden"
+        >
+          <div className="relative aspect-square">
+            <Image
+              src="/3.jpg"
+              alt="Gallery image"
+              fill
+              className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
+            />
+          </div>
+        </a>
+        <a
+          href="https://instagram.com/iannabeauty"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="relative group overflow-hidden"
+        >
+          <div className="relative aspect-square">
+            <Image
+              src="/7.jpg"
+              alt="Gallery image"
+              fill
+              className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
+            />
+          </div>
+        </a>
+        <a
+          href="https://instagram.com/iannabeauty"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="relative group overflow-hidden"
+        >
+          <div className="relative aspect-square">
+            <Image
+              src="/1.jpg"
+              alt="Gallery image"
+              fill
+              className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
+            />
+          </div>
+        </a>
+      </div>
     </section>
   )
 }
