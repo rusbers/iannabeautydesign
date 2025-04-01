@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils"
 
-const BASE_CLASS = "font-montserrat text-balance text-secondary-foreground"
+const BASE_CLASS = "font-montserrat text-pretty text-secondary-foreground"
 
 export const BodyText = ({
   children,

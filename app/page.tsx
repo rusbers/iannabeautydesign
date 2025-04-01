@@ -10,12 +10,15 @@ import { cn } from "@/lib/utils"
 import { Brushes } from "@/components/icons/brushes"
 import { Lashes } from "@/components/icons/lashes"
 import { Lips } from "@/components/icons/lips"
+
 export default function Home() {
   return (
     <>
       <HeroSection />
-      <AboutSection />
       <ServicesOverview />
+      <AboutSection />
+      <PricingSection />
+      <TestimonialsSection />
     </>
   )
 }
@@ -25,6 +28,33 @@ const SERVICES = [
   { title: "Aquarelle Lips" },
   { title: "Brow & Lash Lamination" },
 ]
+
+// Reusable Button Component
+const Button = ({
+  href,
+  variant = "primary",
+  className,
+  children,
+}: {
+  href: string
+  variant?: "primary" | "outline"
+  className?: string
+  children: React.ReactNode
+}) => {
+  return (
+    <Link
+      href={href}
+      className={cn(
+        "px-8 py-4 flex items-center justify-center gap-2 transition-all duration-300 transform max-w-[21.25rem] min-w-44",
+        variant === "primary" && "bg-gold-500 text-black hover:bg-gold/90 font-medium",
+        variant === "outline" && "border border-gold-500 text-gold-500 hover:bg-gold-500/10",
+        className
+      )}
+    >
+      {children}
+    </Link>
+  )
+}
 
 const HeroSection = () => {
   return (
@@ -75,18 +105,10 @@ const HeroSection = () => {
 
         {/* CTAs */}
         <div className="flex flex-col sm:flex-row gap-4">
-          <Link
-            href="/contact"
-            className="bg-gold-500 text-black px-8 py-4 flex items-center justify-center gap-2 hover:bg-gold/90 transition-all duration-300 transform  font-medium max-w-[21.25rem] min-w-44"
-          >
-            Book Now
-          </Link>
-          <Link
-            href="/services"
-            className="border border-gold-500 text-gold-500 px-8 py-4 flex items-center justify-center gap-2 hover:bg-gold-500/10 transition-all duration-300 transform  max-w-[21.25rem] min-w-44"
-          >
+          <Button href="/contact">Book Now</Button>
+          <Button href="/services" variant="outline">
             View Services
-          </Link>
+          </Button>
         </div>
       </div>
     </section>
@@ -102,11 +124,26 @@ const ServiceItem = ({ title }: { title: string }) => {
   )
 }
 
-const SectionTag = ({ className, children }: { className?: string; children: string }) => (
-  <div className={cn("flex items-center justify-center lg:justify-start gap-2", className)}>
+type SectionTagProps = {
+  className?: string
+  children: string
+  variant?: "default" | "centered" | "responsive"
+}
+
+const SectionTag = ({ className, children, variant = "default" }: SectionTagProps) => (
+  <div
+    className={cn(
+      "flex items-center gap-2",
+      variant === "default" && "justify-start",
+      variant === "centered" && "justify-center",
+      variant === "responsive" && "justify-center lg:justify-start",
+      className
+    )}
+  >
     <div className="h-px w-12 bg-gold-500"></div>
     <span className="text-gold-500 uppercase tracking-[0.2em] text-sm">{children}</span>
-    <div className="h-px w-12 bg-gold-500 lg:hidden"></div>
+    {variant === "centered" && <div className="h-px w-12 bg-gold-500"></div>}
+    {variant === "responsive" && <div className="h-px w-12 bg-gold-500 lg:hidden"></div>}
   </div>
 )
 
@@ -114,16 +151,20 @@ const AboutSection = () => {
   return (
     <section className="py-20 container">
       <div className="grid lg:grid-cols-[400px_auto] gap-12 items-center">
-        <SectionTag className="lg:hidden">About Me</SectionTag>
+        <SectionTag className="lg:hidden" variant="responsive">
+          About Me
+        </SectionTag>
         {/* Left Column - Image */}
-        <div className="relative size-[320px] sm:size-[400px] mx-auto">
-          <div className="absolute inset-0 border-2 border-gold/50 transform -translate-x-2 -translate-y-2 rounded-full -z-10"></div>
+        <div className="relative size-[280px] sm:size-[400px] mx-auto">
+          <div className="absolute inset-0 border-2 border-gold-800 transform -translate-x-2 -translate-y-2 rounded-full -z-10"></div>
           <Image src="/Ianna.jpg" fill className="rounded-full" alt="Ianna" />
         </div>
 
         {/* Right Column - Content */}
         <div>
-          <SectionTag className="hidden lg:flex mb-6">About Me</SectionTag>
+          <SectionTag aria-hidden className="hidden lg:flex mb-6" variant="responsive">
+            About Me
+          </SectionTag>
 
           <H2 className="mb-8 text-center lg:text-left">
             Hi! I&apos;m <span className="text-gold-500">Ianna</span> - Permanent Makeup Artist
@@ -141,308 +182,256 @@ const AboutSection = () => {
             </BodyText>
           </div>
 
-          <Link
-            href="/contact"
-            className="border border-gold-500 text-gold-500 px-8 py-4 flex items-center justify-center gap-2 hover:bg-gold-500/10 transition-all duration-300 transform  max-w-[21.25rem] min-w-44 mt-9 mx-auto lg:mx-0"
-          >
+          <Button href="/contact" variant="outline" className="mt-9 mx-auto lg:mx-0">
             Contact Me
             <ChevronRight className="w-5 h-5" />
-          </Link>
+          </Button>
         </div>
       </div>
     </section>
   )
 }
 
+const ExternalLink = ({
+  href,
+  children,
+  className,
+}: {
+  href: string
+  children: React.ReactNode
+  className?: string
+}) => {
+  return (
+    <a
+      className={cn(
+        "text-secondary-foreground underline underline-offset-[6px] hover:text-gold-500 transition-all duration-300 text-sm",
+        className
+      )}
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      {children}
+    </a>
+  )
+}
+
+// Reusable ServiceCard Component
+const ServiceCard = ({
+  icon: Icon,
+  title,
+  description,
+  href,
+}: {
+  icon: React.ElementType
+  title: string
+  description: string
+  href: string
+}) => {
+  return (
+    <li className="flex items-start gap-4">
+      <Icon className="shrink-0 size-[3rem]" />
+      <div>
+        <H3 className="mb-2">{title}</H3>
+        <BodyText className="mb-4 max-w-sm">{description}</BodyText>
+        <ExternalLink href={href}>See More</ExternalLink>
+      </div>
+    </li>
+  )
+}
+
+const SERVICES_DATA = [
+  {
+    icon: Brushes,
+    title: "Powder Brows",
+    description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam, ea?",
+    href: "/services/powder-brows",
+  },
+  {
+    icon: Lips,
+    title: "Aquarelle Lips",
+    description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam, ea?",
+    href: "/services/aquarelle-lips",
+  },
+  {
+    icon: Lashes,
+    title: "Brow & Lash Lamination",
+    description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam, ea?",
+    href: "/services/brow-lash-lamination",
+  },
+]
+
 const ServicesOverview = () => {
   return (
     <section className="py-20 bg-white/5">
       <div className="container">
-        {/* This heading is visually hidden but present for accessibility and SEO */}
         <H2 className="sr-only">My Services</H2>
         <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <li className="flex items-start gap-4">
-            <Brushes className="shrink-0 size-[3rem]" />
-            <div>
-              <H3 className="mb-2">Powder Brows</H3>
-              <BodyText className="mb-4 text-pretty">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam, ea?
-              </BodyText>
-              <Link
-                className="text-secondary-foreground underline  underline-offset-[6px] hover:text-gold-500 transition-all duration-300 text-sm"
-                href="/services/powder-brows"
-              >
-                See More
-              </Link>
-            </div>
-          </li>
-          <li className="flex items-start gap-4">
-            <Lips className="shrink-0 size-[3rem]" />
-            <div>
-              <H3 className="mb-2">Aquarelle Lips</H3>
-              <BodyText className="mb-4 text-pretty">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam, ea?
-              </BodyText>
-              <Link
-                className="text-secondary-foreground  underline  underline-offset-[6px] hover:text-gold-500 transition-all duration-300 text-sm"
-                href="/services/aquarelle-lips"
-              >
-                See More
-              </Link>
-            </div>
-          </li>
-          <li className="flex items-start gap-4 ">
-            <Lashes className="size-[3rem] shrink-0" />
-            <div>
-              <H3 className="mb-2">Brow & Lash Lamination</H3>
-              <BodyText className="mb-4 text-pretty">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam, ea?
-              </BodyText>
-              <Link
-                className="text-secondary-foreground underline underline-offset-[6px] hover:text-gold-500 transition-all duration-300 text-sm"
-                href="/services/brow-lash-lamination"
-              >
-                See More
-              </Link>
-            </div>
-          </li>
+          {SERVICES_DATA.map((service) => (
+            <ServiceCard key={service.title} {...service} />
+          ))}
         </ul>
       </div>
     </section>
   )
 }
 
-const PriceListSection = () => {
+// Pricing Section
+
+const PriceItem = ({
+  service,
+  price,
+  description,
+}: {
+  service: string
+  price: number
+  description: string
+}) => {
   return (
-    <section className="relative py-20 bg-white/5">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="text-center mb-16">
-          <div className="flex items-center justify-center gap-2 mb-6">
-            <div className="h-px w-12 bg-gold"></div>
-            <span className="text-gold-500 uppercase tracking-[0.2em] text-sm">Our Services</span>
-            <div className="h-px w-12 bg-gold"></div>
+    <li className="group">
+      <div className="flex items-center justify-between gap-4">
+        <div className="flex-1 flex items-center gap-2">
+          <H3 className="text-montserrat font-medium">{service}</H3>
+          <div className="flex-1 border-b border-dashed border-gray-700 mx-4" />
+        </div>
+        <span className="text-xl font-medium">€{price}</span>
+      </div>
+      <p className="text-gray-400 mt-2 max-w-md">{description}</p>
+    </li>
+  )
+}
+
+const PRICING_DATA = [
+  {
+    service: "Powder Brows",
+    price: 155,
+    description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam, ea?",
+  },
+  {
+    service: "Aquarelle Lips",
+    price: 160,
+    description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam, ea?",
+  },
+  {
+    service: "Brow & Lash Lamination",
+    price: 50,
+    description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam, ea?",
+  },
+]
+
+const PricingSection = () => {
+  return (
+    <section className="py-20 bg-white/5">
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_350px] gap-14 items-center lg:container">
+        <div className="max-lg:container lg:pr-0">
+          <SectionTag className="mb-4">Pricing</SectionTag>
+          <H2 className="mb-12">Services & Price List</H2>
+          <div className="max-w-3xl">
+            <ul className="grid grid-cols-1 gap-8">
+              {PRICING_DATA.map((item) => (
+                <PriceItem key={item.service} {...item} />
+              ))}
+            </ul>
           </div>
-          <h2 className="font-playfair text-4xl mb-6">
-            Investment in Your <span className="text-gold-500">Beauty</span>
-          </h2>
-          <p className=" font-light max-w-2xl mx-auto">
-            Choose from our range of premium services, each designed to enhance your natural beauty
-            and boost your confidence.
-          </p>
+          <Button href="/prices" variant="outline" className="mt-12">
+            View Full Price List
+          </Button>
         </div>
 
-        {/* Price Cards Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {/* Powder Brows */}
-          <div className="group relative">
-            <div className="absolute inset-0 bg-gradient-to-b from-gold/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-            <div className="relative p-8 bg-white/5 border border-gold/10 backdrop-blur-sm">
-              <h3 className="font-playfair text-2xl mb-4">Powder Brows</h3>
-              <div className="text-gold-500 text-3xl font-playfair mb-6">$599</div>
-              <ul className="space-y-4 mb-8">
-                <li className="flex items-center gap-3 ">
-                  <Check className="w-5 h-5 text-gold-500" />
-                  <span>Natural-looking, defined brows</span>
-                </li>
-                <li className="flex items-center gap-3 ">
-                  <Check className="w-5 h-5 text-gold-500" />
-                  <span>Customized shape and color</span>
-                </li>
-                <li className="flex items-center gap-3 ">
-                  <Check className="w-5 h-5 text-gold-500" />
-                  <span>Touch-up within 6-8 weeks</span>
-                </li>
-                <li className="flex items-center gap-3 ">
-                  <Check className="w-5 h-5 text-gold-500" />
-                  <span>Aftercare kit included</span>
-                </li>
-              </ul>
-              <button className="w-full bg-gold-500 text-black px-8 py-4 flex items-center justify-center gap-2 hover:bg-gold/90 transition-all duration-300">
-                Book Now
-                <ChevronRight className="w-5 h-5" />
-              </button>
-            </div>
-          </div>
-
-          {/* Aquarelle Lips */}
-          <div className="group relative">
-            <div className="absolute inset-0 bg-gradient-to-b from-gold/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-            <div className="relative p-8 bg-white/5 border border-gold/10 backdrop-blur-sm">
-              <h3 className="font-playfair text-2xl mb-4">Aquarelle Lips</h3>
-              <div className="text-gold-500 text-3xl font-playfair mb-6">$699</div>
-              <ul className="space-y-4 mb-8">
-                <li className="flex items-center gap-3 ">
-                  <Check className="w-5 h-5 text-gold-500" />
-                  <span>Full lip color enhancement</span>
-                </li>
-                <li className="flex items-center gap-3 ">
-                  <Check className="w-5 h-5 text-gold-500" />
-                  <span>Custom color blending</span>
-                </li>
-                <li className="flex items-center gap-3 ">
-                  <Check className="w-5 h-5 text-gold-500" />
-                  <span>Touch-up within 6-8 weeks</span>
-                </li>
-                <li className="flex items-center gap-3 ">
-                  <Check className="w-5 h-5 text-gold-500" />
-                  <span>Healing balm included</span>
-                </li>
-              </ul>
-              <button className="w-full bg-gold-500 text-black px-8 py-4 flex items-center justify-center gap-2 hover:bg-gold/90 transition-all duration-300">
-                Book Now
-                <ChevronRight className="w-5 h-5" />
-              </button>
-            </div>
-          </div>
-
-          {/* Brow & Lash Lamination */}
-          <div className="group relative lg:translate-y-0 md:translate-y-0 md:col-span-2 lg:col-span-1">
-            <div className="absolute inset-0 bg-gradient-to-b from-gold/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-            <div className="relative p-8 bg-white/5 border border-gold/10 backdrop-blur-sm">
-              <h3 className="font-playfair text-2xl mb-4">Brow & Lash Lamination</h3>
-              <div className="text-gold-500 text-3xl font-playfair mb-6">$299</div>
-              <ul className="space-y-4 mb-8">
-                <li className="flex items-center gap-3 ">
-                  <Check className="w-5 h-5 text-gold-500" />
-                  <span>Brow shaping and tinting</span>
-                </li>
-                <li className="flex items-center gap-3 ">
-                  <Check className="w-5 h-5 text-gold-500" />
-                  <span>Lash lift and tint</span>
-                </li>
-                <li className="flex items-center gap-3 ">
-                  <Check className="w-5 h-5 text-gold-500" />
-                  <span>Nourishing treatment</span>
-                </li>
-                <li className="flex items-center gap-3 ">
-                  <Check className="w-5 h-5 text-gold-500" />
-                  <span>Aftercare instructions</span>
-                </li>
-              </ul>
-              <button className="w-full bg-gold-500 text-black px-8 py-4 flex items-center justify-center gap-2 hover:bg-gold/90 transition-all duration-300">
-                Book Now
-                <ChevronRight className="w-5 h-5" />
-              </button>
-            </div>
-          </div>
-        </div>
+        <Image
+          src="/services-face.png"
+          alt=""
+          width={1215 / 2}
+          height={1620 / 2}
+          className="w-full h-full object-cover sm:hidden lg:inline-block"
+        />
       </div>
     </section>
   )
 }
+
+// Testimonials Section
+
+const TestimonialCard = ({
+  imageSrc,
+  name,
+  username,
+  content,
+  timeAgo,
+}: {
+  imageSrc: string
+  name: string
+  username: string
+  content: string
+  timeAgo: string
+}) => {
+  return (
+    <figure className="p-8 bg-white/5 border border-gold-900 backdrop-blur-sm mb-6 flex flex-col">
+      <div className="flex items-center gap-4 mb-6">
+        {/* TODO Should be NextImage */}
+        <img src={imageSrc} alt={name} className="w-12 h-12 object-cover rounded-full" />
+        <div>
+          <div>{name}</div>
+          <div className="text-gold-500 text-sm">{username}</div>
+        </div>
+      </div>
+      <p className="text-secondary-foreground font-light mb-4">{content}</p>
+      <div className="text-gold-600 text-sm mt-auto">{timeAgo}</div>
+    </figure>
+  )
+}
+
+const TESTIMONIALS_DATA = [
+  {
+    imageSrc:
+      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80",
+    name: "Sarah Mitchell",
+    username: "@sarahm",
+    content:
+      '"I was nervous about getting powder brows, but Iana made me feel so comfortable. The results are incredible - natural-looking and exactly what I wanted! My morning routine is so much easier now. 💕"',
+    timeAgo: "2 weeks ago",
+  },
+  {
+    imageSrc:
+      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80",
+    name: "Emma Thompson",
+    username: "@emma.beauty",
+    content:
+      '"The aquarelle lips procedure was life-changing! Iana is truly an artist. The color is perfect and the shape enhances my natural lips beautifully. No more lipstick needed! ✨"',
+    timeAgo: "1 month ago",
+  },
+  {
+    imageSrc:
+      "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&q=80",
+    name: "Jessica Lee",
+    username: "@jess.lee",
+    content:
+      '"The brow lamination completely transformed my face! Iana has magic hands. The whole experience was so luxurious, and the results are amazing. My brows look perfect 24/7! 🙌"',
+    timeAgo: "1 month ago",
+  },
+]
 
 const TestimonialsSection = () => {
   return (
-    <section className="relative py-20">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="text-center mb-16">
-          <div className="flex items-center justify-center gap-2 mb-6">
-            <div className="h-px w-12 bg-gold"></div>
-            <span className="text-gold-500 uppercase tracking-[0.2em] text-sm">Client Stories</span>
-            <div className="h-px w-12 bg-gold"></div>
-          </div>
-          <h2 className="font-playfair text-4xl mb-6">
-            Real Results, Real <span className="text-gold-500">Stories</span>
-          </h2>
-          <p className=" font-light max-w-2xl mx-auto">
-            Discover what our clients say about their transformative experiences at IannaBeauty.
-          </p>
-        </div>
+    <section className="py-20 container">
+      <SectionTag className="mb-4" variant="centered">
+        Testimonials
+      </SectionTag>
+      <H2 className="mb-12 text-center">
+        Real Stories, Real <span className="text-gold-500">Results</span>
+      </H2>
 
-        {/* Testimonials Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-          {/* Testimonial 1 */}
-          <div className="relative group">
-            <div className="absolute inset-0 bg-gradient-to-b from-gold/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-            <div className="relative p-8 bg-white/5 border border-gold/10 backdrop-blur-sm">
-              <div className="flex items-center gap-4 mb-6">
-                <img
-                  src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80"
-                  alt="Client"
-                  className="w-12 h-12 rounded-full object-cover"
-                />
-                <div>
-                  <div className="font-playfair">Sarah Mitchell</div>
-                  <div className="text-gold-500 text-sm">@sarahm</div>
-                </div>
-              </div>
-              <p className=" font-light mb-4">
-                "I was nervous about getting powder brows, but Iana made me feel so comfortable. The
-                results are incredible - natural-looking and exactly what I wanted! My morning
-                routine is so much easier now. 💕"
-              </p>
-              <div className="text-gold-500/60 text-sm">2 weeks ago</div>
-            </div>
-          </div>
-
-          {/* Testimonial 2 */}
-          <div className="relative group">
-            <div className="absolute inset-0 bg-gradient-to-b from-gold/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-            <div className="relative p-8 bg-white/5 border border-gold/10 backdrop-blur-sm">
-              <div className="flex items-center gap-4 mb-6">
-                <img
-                  src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80"
-                  alt="Client"
-                  className="w-12 h-12 rounded-full object-cover"
-                />
-                <div>
-                  <div className="font-playfair">Emma Thompson</div>
-                  <div className="text-gold-500 text-sm">@emma.beauty</div>
-                </div>
-              </div>
-              <p className=" font-light mb-4">
-                "The aquarelle lips procedure was life-changing! Iana is truly an artist. The color
-                is perfect and the shape enhances my natural lips beautifully. No more lipstick
-                needed! ✨"
-              </p>
-              <div className="text-gold-500/60 text-sm">1 month ago</div>
-            </div>
-          </div>
-
-          {/* Testimonial 3 */}
-          <div className="relative group">
-            <div className="absolute inset-0 bg-gradient-to-b from-gold/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-            <div className="relative p-8 bg-white/5 border border-gold/10 backdrop-blur-sm">
-              <div className="flex items-center gap-4 mb-6">
-                <img
-                  src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&q=80"
-                  alt="Client"
-                  className="w-12 h-12 rounded-full object-cover"
-                />
-                <div>
-                  <div className="font-playfair">Jessica Lee</div>
-                  <div className="text-gold-500 text-sm">@jess.lee</div>
-                </div>
-              </div>
-              <p className=" font-light mb-4">
-                "The brow lamination completely transformed my face! Iana has magic hands. The whole
-                experience was so luxurious, and the results are amazing. My brows look perfect
-                24/7! 🙌"
-              </p>
-              <div className="text-gold-500/60 text-sm">1 month ago</div>
-            </div>
-          </div>
-        </div>
-
-        {/* Instagram Link */}
-        <div className="text-center">
-          <a
-            href="https://instagram.com/iannabeauty"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-gold-500 hover:text-gold-500/80 transition-colors duration-300"
-          >
-            <span className="font-playfair text-lg">See more client stories on Instagram</span>
-            <ChevronRight className="w-5 h-5" />
-          </a>
-        </div>
+      {/* Testimonials Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-12 mb-6">
+        {TESTIMONIALS_DATA.map((testimonial, index) => (
+          <TestimonialCard key={index} {...testimonial} />
+        ))}
       </div>
+
+      {/* Instagram Link */}
+      <ExternalLink className="text-center block" href="https://instagram.com/iannabeauty">
+        See more client stories on Instagram
+      </ExternalLink>
     </section>
   )
-}
-
-const ContactSection = () => {
-  return null
 }
