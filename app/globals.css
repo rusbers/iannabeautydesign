@@ -56,10 +56,19 @@
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%; */
-    --gold: 45.86 64.61% 52.35%;
 
-    --gold-light: 43.85 72.2% 85.88%;
-    --background-gold: linear-gradient(90deg, hsl(var(--gold)) 0%, hsl(var(--gold-light)) 100%);
+    /* GOLD */
+    --gold-50: 48.8 61.5% 94.9%;
+    --gold-100: 45.5 64.7% 90%;
+    --gold-200: 45.7 64.9% 81%;
+    --gold-300: 46.2 64.9% 71%;
+    --gold-400: 45.6 64.8% 62.2%;
+    --gold-500: 45.9 64.6% 52.4%;
+    --gold-600: 46.1 64.5% 42%;
+    --gold-700: 45.9 64.6% 31%;
+    --gold-800: 46.1 64.5% 21%;
+    --gold-900: 45.5 64.7% 10%;
+    --gold-950: 45 61.5% 5.1%;
   }
 }
 @layer base {
@@ -69,23 +78,4 @@
   body {
     @apply bg-background text-foreground font-montserrat;
   }
-}
-@keyframes chevronPulse {
-  0% {
-    transform: translateX(0);
-  }
-  50% {
-    transform: translateX(4px);
-  }
-  100% {
-    transform: translateX(0);
-  }
-}
-.animate-chevron {
-  animation: chevronPulse 1s ease-in-out infinite;
-}
-.gold-gradient {
-  background: linear-gradient(90deg, hsl(var(--gold)) 0%, hsl(var(--gold-light)) 100%);
-  background-clip: text;
-  color: transparent;
 }

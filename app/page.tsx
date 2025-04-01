@@ -2,17 +2,20 @@
 /* eslint-disable react/no-unescaped-entities */
 import { ChevronRight, Star, Check, Crown } from "lucide-react"
 import Link from "next/link"
-import { H1, H2 } from "@/components/typography/heading"
+import { H1, H2, H3 } from "@/components/typography/heading"
 import { BodyText } from "@/components/typography/body-text"
 import { TextShimmerGold } from "@/components/typography/decorators"
 import Image from "next/image"
 import { cn } from "@/lib/utils"
-
+import { Brushes } from "@/components/icons/brushes"
+import { Lashes } from "@/components/icons/lashes"
+import { Lips } from "@/components/icons/lips"
 export default function Home() {
   return (
     <>
       <HeroSection />
       <AboutSection />
+      <ServicesOverview />
     </>
   )
 }
@@ -44,8 +47,8 @@ const HeroSection = () => {
         {/* Brand Badge */}
         <div className="flex items-center gap-2 mb-6">
           <div className="flex items-center gap-2">
-            <Crown className="size-4 text-gold" />
-            <BodyText className="tracking-[0.1em] font-medium text-gold font-playfair text-base">
+            <Crown className="size-4 text-gold-500" />
+            <BodyText className="tracking-[0.1em] font-medium text-gold-500 font-playfair text-base">
               Premium Beauty Services
             </BodyText>
           </div>
@@ -74,13 +77,13 @@ const HeroSection = () => {
         <div className="flex flex-col sm:flex-row gap-4">
           <Link
             href="/contact"
-            className="bg-gold text-black px-8 py-4 flex items-center justify-center gap-2 hover:bg-gold/90 transition-all duration-300 transform  font-medium max-w-[21.25rem] min-w-44"
+            className="bg-gold-500 text-black px-8 py-4 flex items-center justify-center gap-2 hover:bg-gold/90 transition-all duration-300 transform  font-medium max-w-[21.25rem] min-w-44"
           >
             Book Now
           </Link>
           <Link
             href="/services"
-            className="border border-gold text-gold px-8 py-4 flex items-center justify-center gap-2 hover:bg-gold/10 transition-all duration-300 transform  max-w-[21.25rem] min-w-44"
+            className="border border-gold-500 text-gold-500 px-8 py-4 flex items-center justify-center gap-2 hover:bg-gold-500/10 transition-all duration-300 transform  max-w-[21.25rem] min-w-44"
           >
             View Services
           </Link>
@@ -93,7 +96,7 @@ const HeroSection = () => {
 const ServiceItem = ({ title }: { title: string }) => {
   return (
     <div className="flex items-center gap-2 group">
-      <Star className="size-4 text-gold" />
+      <Star className="size-4 text-gold-500" />
       <BodyText className="text-foreground">{title}</BodyText>
     </div>
   )
@@ -101,9 +104,9 @@ const ServiceItem = ({ title }: { title: string }) => {
 
 const SectionTag = ({ className, children }: { className?: string; children: string }) => (
   <div className={cn("flex items-center justify-center lg:justify-start gap-2", className)}>
-    <div className="h-px w-12 bg-gold"></div>
-    <span className="text-gold uppercase tracking-[0.2em] text-sm">{children}</span>
-    <div className="h-px w-12 bg-gold lg:hidden"></div>
+    <div className="h-px w-12 bg-gold-500"></div>
+    <span className="text-gold-500 uppercase tracking-[0.2em] text-sm">{children}</span>
+    <div className="h-px w-12 bg-gold-500 lg:hidden"></div>
   </div>
 )
 
@@ -123,7 +126,7 @@ const AboutSection = () => {
           <SectionTag className="hidden lg:flex mb-6">About Me</SectionTag>
 
           <H2 className="mb-8 text-center lg:text-left">
-            Hi! I&apos;m <span className="text-gold">Ianna</span> - Permanent Makeup Artist
+            Hi! I&apos;m <span className="text-gold-500">Ianna</span> - Permanent Makeup Artist
           </H2>
 
           <div className="space-y-4 font-light text-center lg:text-left">
@@ -140,12 +143,70 @@ const AboutSection = () => {
 
           <Link
             href="/contact"
-            className="border border-gold text-gold px-8 py-4 flex items-center justify-center gap-2 hover:bg-gold/10 transition-all duration-300 max-w-[21.25rem] min-w-44 mt-9 mx-auto lg:mx-0"
+            className="border border-gold-500 text-gold-500 px-8 py-4 flex items-center justify-center gap-2 hover:bg-gold-500/10 transition-all duration-300 transform  max-w-[21.25rem] min-w-44 mt-9 mx-auto lg:mx-0"
           >
             Contact Me
             <ChevronRight className="w-5 h-5" />
           </Link>
         </div>
+      </div>
+    </section>
+  )
+}
+
+const ServicesOverview = () => {
+  return (
+    <section className="py-20 bg-white/5">
+      <div className="container">
+        {/* This heading is visually hidden but present for accessibility and SEO */}
+        <H2 className="sr-only">My Services</H2>
+        <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <li className="flex items-start gap-4">
+            <Brushes className="shrink-0 size-[3rem]" />
+            <div>
+              <H3 className="mb-2">Powder Brows</H3>
+              <BodyText className="mb-4 text-pretty">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam, ea?
+              </BodyText>
+              <Link
+                className="text-secondary-foreground underline  underline-offset-[6px] hover:text-gold-500 transition-all duration-300 text-sm"
+                href="/services/powder-brows"
+              >
+                See More
+              </Link>
+            </div>
+          </li>
+          <li className="flex items-start gap-4">
+            <Lips className="shrink-0 size-[3rem]" />
+            <div>
+              <H3 className="mb-2">Aquarelle Lips</H3>
+              <BodyText className="mb-4 text-pretty">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam, ea?
+              </BodyText>
+              <Link
+                className="text-secondary-foreground  underline  underline-offset-[6px] hover:text-gold-500 transition-all duration-300 text-sm"
+                href="/services/aquarelle-lips"
+              >
+                See More
+              </Link>
+            </div>
+          </li>
+          <li className="flex items-start gap-4 ">
+            <Lashes className="size-[3rem] shrink-0" />
+            <div>
+              <H3 className="mb-2">Brow & Lash Lamination</H3>
+              <BodyText className="mb-4 text-pretty">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam, ea?
+              </BodyText>
+              <Link
+                className="text-secondary-foreground underline underline-offset-[6px] hover:text-gold-500 transition-all duration-300 text-sm"
+                href="/services/brow-lash-lamination"
+              >
+                See More
+              </Link>
+            </div>
+          </li>
+        </ul>
       </div>
     </section>
   )
@@ -159,11 +220,11 @@ const PriceListSection = () => {
         <div className="text-center mb-16">
           <div className="flex items-center justify-center gap-2 mb-6">
             <div className="h-px w-12 bg-gold"></div>
-            <span className="text-gold uppercase tracking-[0.2em] text-sm">Our Services</span>
+            <span className="text-gold-500 uppercase tracking-[0.2em] text-sm">Our Services</span>
             <div className="h-px w-12 bg-gold"></div>
           </div>
           <h2 className="font-playfair text-4xl mb-6">
-            Investment in Your <span className="text-gold">Beauty</span>
+            Investment in Your <span className="text-gold-500">Beauty</span>
           </h2>
           <p className=" font-light max-w-2xl mx-auto">
             Choose from our range of premium services, each designed to enhance your natural beauty
@@ -178,26 +239,26 @@ const PriceListSection = () => {
             <div className="absolute inset-0 bg-gradient-to-b from-gold/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
             <div className="relative p-8 bg-white/5 border border-gold/10 backdrop-blur-sm">
               <h3 className="font-playfair text-2xl mb-4">Powder Brows</h3>
-              <div className="text-gold text-3xl font-playfair mb-6">$599</div>
+              <div className="text-gold-500 text-3xl font-playfair mb-6">$599</div>
               <ul className="space-y-4 mb-8">
                 <li className="flex items-center gap-3 ">
-                  <Check className="w-5 h-5 text-gold" />
+                  <Check className="w-5 h-5 text-gold-500" />
                   <span>Natural-looking, defined brows</span>
                 </li>
                 <li className="flex items-center gap-3 ">
-                  <Check className="w-5 h-5 text-gold" />
+                  <Check className="w-5 h-5 text-gold-500" />
                   <span>Customized shape and color</span>
                 </li>
                 <li className="flex items-center gap-3 ">
-                  <Check className="w-5 h-5 text-gold" />
+                  <Check className="w-5 h-5 text-gold-500" />
                   <span>Touch-up within 6-8 weeks</span>
                 </li>
                 <li className="flex items-center gap-3 ">
-                  <Check className="w-5 h-5 text-gold" />
+                  <Check className="w-5 h-5 text-gold-500" />
                   <span>Aftercare kit included</span>
                 </li>
               </ul>
-              <button className="w-full bg-gold text-black px-8 py-4 flex items-center justify-center gap-2 hover:bg-gold/90 transition-all duration-300">
+              <button className="w-full bg-gold-500 text-black px-8 py-4 flex items-center justify-center gap-2 hover:bg-gold/90 transition-all duration-300">
                 Book Now
                 <ChevronRight className="w-5 h-5" />
               </button>
@@ -209,26 +270,26 @@ const PriceListSection = () => {
             <div className="absolute inset-0 bg-gradient-to-b from-gold/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
             <div className="relative p-8 bg-white/5 border border-gold/10 backdrop-blur-sm">
               <h3 className="font-playfair text-2xl mb-4">Aquarelle Lips</h3>
-              <div className="text-gold text-3xl font-playfair mb-6">$699</div>
+              <div className="text-gold-500 text-3xl font-playfair mb-6">$699</div>
               <ul className="space-y-4 mb-8">
                 <li className="flex items-center gap-3 ">
-                  <Check className="w-5 h-5 text-gold" />
+                  <Check className="w-5 h-5 text-gold-500" />
                   <span>Full lip color enhancement</span>
                 </li>
                 <li className="flex items-center gap-3 ">
-                  <Check className="w-5 h-5 text-gold" />
+                  <Check className="w-5 h-5 text-gold-500" />
                   <span>Custom color blending</span>
                 </li>
                 <li className="flex items-center gap-3 ">
-                  <Check className="w-5 h-5 text-gold" />
+                  <Check className="w-5 h-5 text-gold-500" />
                   <span>Touch-up within 6-8 weeks</span>
                 </li>
                 <li className="flex items-center gap-3 ">
-                  <Check className="w-5 h-5 text-gold" />
+                  <Check className="w-5 h-5 text-gold-500" />
                   <span>Healing balm included</span>
                 </li>
               </ul>
-              <button className="w-full bg-gold text-black px-8 py-4 flex items-center justify-center gap-2 hover:bg-gold/90 transition-all duration-300">
+              <button className="w-full bg-gold-500 text-black px-8 py-4 flex items-center justify-center gap-2 hover:bg-gold/90 transition-all duration-300">
                 Book Now
                 <ChevronRight className="w-5 h-5" />
               </button>
@@ -240,26 +301,26 @@ const PriceListSection = () => {
             <div className="absolute inset-0 bg-gradient-to-b from-gold/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
             <div className="relative p-8 bg-white/5 border border-gold/10 backdrop-blur-sm">
               <h3 className="font-playfair text-2xl mb-4">Brow & Lash Lamination</h3>
-              <div className="text-gold text-3xl font-playfair mb-6">$299</div>
+              <div className="text-gold-500 text-3xl font-playfair mb-6">$299</div>
               <ul className="space-y-4 mb-8">
                 <li className="flex items-center gap-3 ">
-                  <Check className="w-5 h-5 text-gold" />
+                  <Check className="w-5 h-5 text-gold-500" />
                   <span>Brow shaping and tinting</span>
                 </li>
                 <li className="flex items-center gap-3 ">
-                  <Check className="w-5 h-5 text-gold" />
+                  <Check className="w-5 h-5 text-gold-500" />
                   <span>Lash lift and tint</span>
                 </li>
                 <li className="flex items-center gap-3 ">
-                  <Check className="w-5 h-5 text-gold" />
+                  <Check className="w-5 h-5 text-gold-500" />
                   <span>Nourishing treatment</span>
                 </li>
                 <li className="flex items-center gap-3 ">
-                  <Check className="w-5 h-5 text-gold" />
+                  <Check className="w-5 h-5 text-gold-500" />
                   <span>Aftercare instructions</span>
                 </li>
               </ul>
-              <button className="w-full bg-gold text-black px-8 py-4 flex items-center justify-center gap-2 hover:bg-gold/90 transition-all duration-300">
+              <button className="w-full bg-gold-500 text-black px-8 py-4 flex items-center justify-center gap-2 hover:bg-gold/90 transition-all duration-300">
                 Book Now
                 <ChevronRight className="w-5 h-5" />
               </button>
@@ -279,11 +340,11 @@ const TestimonialsSection = () => {
         <div className="text-center mb-16">
           <div className="flex items-center justify-center gap-2 mb-6">
             <div className="h-px w-12 bg-gold"></div>
-            <span className="text-gold uppercase tracking-[0.2em] text-sm">Client Stories</span>
+            <span className="text-gold-500 uppercase tracking-[0.2em] text-sm">Client Stories</span>
             <div className="h-px w-12 bg-gold"></div>
           </div>
           <h2 className="font-playfair text-4xl mb-6">
-            Real Results, Real <span className="text-gold">Stories</span>
+            Real Results, Real <span className="text-gold-500">Stories</span>
           </h2>
           <p className=" font-light max-w-2xl mx-auto">
             Discover what our clients say about their transformative experiences at IannaBeauty.
@@ -304,7 +365,7 @@ const TestimonialsSection = () => {
                 />
                 <div>
                   <div className="font-playfair">Sarah Mitchell</div>
-                  <div className="text-gold text-sm">@sarahm</div>
+                  <div className="text-gold-500 text-sm">@sarahm</div>
                 </div>
               </div>
               <p className=" font-light mb-4">
@@ -312,7 +373,7 @@ const TestimonialsSection = () => {
                 results are incredible - natural-looking and exactly what I wanted! My morning
                 routine is so much easier now. 💕"
               </p>
-              <div className="text-gold/60 text-sm">2 weeks ago</div>
+              <div className="text-gold-500/60 text-sm">2 weeks ago</div>
             </div>
           </div>
 
@@ -328,7 +389,7 @@ const TestimonialsSection = () => {
                 />
                 <div>
                   <div className="font-playfair">Emma Thompson</div>
-                  <div className="text-gold text-sm">@emma.beauty</div>
+                  <div className="text-gold-500 text-sm">@emma.beauty</div>
                 </div>
               </div>
               <p className=" font-light mb-4">
@@ -336,7 +397,7 @@ const TestimonialsSection = () => {
                 is perfect and the shape enhances my natural lips beautifully. No more lipstick
                 needed! ✨"
               </p>
-              <div className="text-gold/60 text-sm">1 month ago</div>
+              <div className="text-gold-500/60 text-sm">1 month ago</div>
             </div>
           </div>
 
@@ -352,7 +413,7 @@ const TestimonialsSection = () => {
                 />
                 <div>
                   <div className="font-playfair">Jessica Lee</div>
-                  <div className="text-gold text-sm">@jess.lee</div>
+                  <div className="text-gold-500 text-sm">@jess.lee</div>
                 </div>
               </div>
               <p className=" font-light mb-4">
@@ -360,7 +421,7 @@ const TestimonialsSection = () => {
                 experience was so luxurious, and the results are amazing. My brows look perfect
                 24/7! 🙌"
               </p>
-              <div className="text-gold/60 text-sm">1 month ago</div>
+              <div className="text-gold-500/60 text-sm">1 month ago</div>
             </div>
           </div>
         </div>
@@ -371,7 +432,7 @@ const TestimonialsSection = () => {
             href="https://instagram.com/iannabeauty"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-gold hover:text-gold/80 transition-colors duration-300"
+            className="inline-flex items-center gap-2 text-gold-500 hover:text-gold-500/80 transition-colors duration-300"
           >
             <span className="font-playfair text-lg">See more client stories on Instagram</span>
             <ChevronRight className="w-5 h-5" />

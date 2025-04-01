@@ -16,14 +16,6 @@ export const H2 = ({ children, className }: { children: React.ReactNode; classNa
 
 export const H3 = ({ children, className }: { children: React.ReactNode; className?: string }) => {
   return (
-    <h3
-      className={cn(
-        BASE_STYLE,
-        "text-xl sm:text-2xl md:text-3xl lg:text-4xl leading-snug",
-        className
-      )}
-    >
-      {children}
-    </h3>
+    <h3 className={cn(BASE_STYLE, "text-xl sm:text-2xl leading-snug", className)}>{children}</h3>
   )
 }
